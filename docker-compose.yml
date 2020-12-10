@@ -6,3 +6,10 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+  mysql:
+    container_name: mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+    ports:
+      - 3306:3306
