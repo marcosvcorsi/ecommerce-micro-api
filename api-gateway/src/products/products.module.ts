@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { ClientProxyModule } from 'src/shared/modules/client-proxy.module';
 import { ProductsController } from './products.controller';
-import { ProductsService } from './products.service';
 
 @Module({
+  imports: [ClientProxyModule],
   controllers: [ProductsController],
-  providers: [ProductsService],
+  providers: [],
 })
 export class ProductsModule {}
