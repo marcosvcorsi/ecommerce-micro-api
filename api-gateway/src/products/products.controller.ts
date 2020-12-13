@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ClientProxyService } from 'src/shared/services/client-proxy.service';
 import { CreateProductDto } from './dtos/create-product.dto';
@@ -21,5 +21,12 @@ export class ProductsController {
   @Get()
   findAll() {
     return this.clientProxyProduct.send('find-products', {}).toPromise();
+  }
+
+  @Get('/search')
+  search(@Query('q') name: string) {
+    return this.clientProxyProduct
+      .send('search-products', { name })
+      .toPromise();
   }
 }
