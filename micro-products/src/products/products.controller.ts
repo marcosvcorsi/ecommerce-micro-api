@@ -5,8 +5,6 @@ import { ProductsService } from './products.service';
 
 @Controller()
 export class ProductsController {
-  private readonly logger = new Logger(ProductsController.name);
-
   constructor(private readonly productsService: ProductsService) {}
 
   @EventPattern('create-product')
@@ -17,5 +15,19 @@ export class ProductsController {
   @MessagePattern('find-products')
   async findAll() {
     return this.productsService.findAll();
+  }
+
+  @MessagePattern('search-products')
+  async search(@Payload() data: any) {
+    const { name } = data;
+
+    return this.productsService.findAllByName(name);
+  }
+
+  @MessagePattern('suggest-products')
+  async suggest(@Payload() data: any) {
+    const { name } = data;
+
+    return this.productsService.search(name);
   }
 }

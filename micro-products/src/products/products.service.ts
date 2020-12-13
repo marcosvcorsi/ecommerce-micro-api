@@ -31,4 +31,29 @@ export class ProductsService {
 
     return product;
   }
+
+  async search(name: string) {
+    const { body } = await this.elasticsearchService.search({
+      index: 'products',
+      body: {
+        query: {
+          match: { name },
+        },
+      },
+    });
+
+    const findProducts = body.hits.hits.map((hit) => hit['_source']);
+
+    return findProducts;
+  }
+
+  async findAllByName(name: string): Promise<Product[]> {
+    const findProducts = await this.search(name);
+
+    const productsIds = findProducts.map((product) => product.id);
+
+    const products = await this.productsRepository.findByIds(productsIds);
+
+    return products;
+  }
 }
