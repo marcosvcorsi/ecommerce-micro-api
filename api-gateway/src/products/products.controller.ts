@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ClientProxyService } from 'src/shared/services/client-proxy.service';
 import { CreateProductDto } from './dtos/create-product.dto';
@@ -16,5 +16,10 @@ export class ProductsController {
   @Post()
   createProduct(@Body() createProductDto: CreateProductDto) {
     this.clientProxyProduct.emit('create-product', createProductDto);
+  }
+
+  @Get()
+  findAll() {
+    return this.clientProxyProduct.send('find-products', {}).toPromise();
   }
 }
