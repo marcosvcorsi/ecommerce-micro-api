@@ -1,5 +1,5 @@
 import { Controller, Logger } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { Product } from './product.entity';
 import { ProductsService } from './products.service';
 
@@ -12,5 +12,10 @@ export class ProductsController {
   @EventPattern('create-product')
   async create(@Payload() createProductDto: Omit<Product, 'id'>) {
     await this.productsService.create(createProductDto);
+  }
+
+  @MessagePattern('find-products')
+  async findAll() {
+    return this.productsService.findAll();
   }
 }
