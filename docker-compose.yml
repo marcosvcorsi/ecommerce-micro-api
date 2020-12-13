@@ -18,6 +18,8 @@ services:
     image: elasticsearch:7.9.3
     environment:
       discovery.type: single-node
+      http.cors.enabled: 'true'
+      http.cors.allow-origin: https://app.elasticvue.com
     ports:
     - 9200:9200
     - 9300:9300
