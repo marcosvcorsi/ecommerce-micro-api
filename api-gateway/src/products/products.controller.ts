@@ -29,4 +29,11 @@ export class ProductsController {
       .send('search-products', { name })
       .toPromise();
   }
+
+  @Get('/suggest')
+  suggest(@Query('q') name: string) {
+    return this.clientProxyProduct
+      .send('suggest-products', { name })
+      .toPromise();
+  }
 }
