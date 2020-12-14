@@ -9,5 +9,8 @@ export class Product {
   name: string;
 
   @Column()
+  description: string;
+
+  @Column()
   price: number;
 }
