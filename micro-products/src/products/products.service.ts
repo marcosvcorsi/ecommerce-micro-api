@@ -19,26 +19,27 @@ export class ProductsService {
 
     await this.productsRepository.save(product);
 
-    const { id, name } = product;
+    const { id, name, description } = product;
 
     await this.elasticsearchService.index({
       index: 'products',
       body: {
         id,
         name,
+        description,
       },
     });
 
     return product;
   }
 
-  async search(name: string) {
+  async search(filter: string) {
     const { body } = await this.elasticsearchService.search({
       index: 'products',
       size: 20,
       body: {
         query: {
-          match: { name },
+          match: { name: filter, description: filter },
         },
       },
     });
