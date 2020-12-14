@@ -35,6 +35,7 @@ export class ProductsService {
   async search(name: string) {
     const { body } = await this.elasticsearchService.search({
       index: 'products',
+      size: 20,
       body: {
         query: {
           match: { name },
