@@ -39,7 +39,7 @@ export class ProductsService {
       size: 20,
       body: {
         query: {
-          match: { name: filter, description: filter },
+          match: { name: filter },
         },
       },
     });
