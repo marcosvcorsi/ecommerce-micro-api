@@ -13,6 +13,11 @@ services:
       MYSQL_ROOT_PASSWORD: docker
     ports:
       - 3306:3306
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - 27017:27017    
   es:
     container_name: es
     image: elasticsearch:7.9.3
