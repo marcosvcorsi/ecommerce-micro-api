@@ -13,4 +13,10 @@ export class CustomersRepository {
 
     return customer.save();
   }
+
+  async findByEmail(email: string) {
+    const customer = await this.customerModel.findOne({ email });
+
+    return customer;
+  }
 }
