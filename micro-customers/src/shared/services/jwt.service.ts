@@ -11,7 +11,7 @@ export class JwtService {
     return jwt.sign(
       payload,
       this.configService.get<string>('JWT_PRIVATE_KEY'),
-      { algorithm: 'RS256' },
+      { algorithm: 'RS256', expiresIn: '1d' },
     );
   }
 }
