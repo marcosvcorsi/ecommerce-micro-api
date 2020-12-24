@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { HashService } from 'src/shared/services/hash.service';
-import { JwtService } from 'src/shared/services/jwt.service';
 import { CustomersRepository } from './customers.repository';
 import { AuthLoginDto } from './dtos/auth-login.dto';
 import { CreateCustomerDto } from './dtos/create-customer.dto';
@@ -35,7 +35,7 @@ export class CustomersService {
       };
     }
 
-    const token = await this.jwtService.generate({ id: user._id });
+    const token = this.jwtService.sign({ id: user._id });
 
     return { token };
   }

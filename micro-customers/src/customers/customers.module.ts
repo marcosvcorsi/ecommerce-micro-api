@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { HashModule } from 'src/shared/modules/hash.module';
-import { JwtModule } from 'src/shared/modules/jwt.module';
 import { Customer, CustomerSchema } from './customer.schema';
 import { CustomersController } from './customers.controller';
 import { CustomersRepository } from './customers.repository';
@@ -15,8 +15,16 @@ import { CustomersService } from './customers.service';
         schema: CustomerSchema,
       },
     ]),
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        privateKey: process.env.JWT_PRIVATE_KEY,
+        signOptions: {
+          algorithm: 'RS256',
+          expiresIn: '1d',
+        },
+      }),
+    }),
     HashModule,
-    JwtModule,
   ],
   controllers: [CustomersController],
   providers: [CustomersRepository, CustomersService],
