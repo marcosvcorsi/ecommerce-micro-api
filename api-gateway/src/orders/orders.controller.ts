@@ -1,8 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { AuthGuard } from '@nestjs/passport';
 import { ClientProxyService } from 'src/shared/services/client-proxy.service';
 import { CreateOrderDto } from './dtos/create-order.dto';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('orders')
 export class OrdersController {
   private readonly clientProxyOrders: ClientProxy;
@@ -14,9 +16,11 @@ export class OrdersController {
   }
 
   @Post()
-  async create(@Body() createOrderDto: CreateOrderDto) {
+  async create(@Body() createOrderDto: CreateOrderDto, @Request() req) {
+    const { id: customerId } = req.user;
+
     await this.clientProxyOrders
-      .emit('create-order', createOrderDto)
+      .emit('create-order', { ...createOrderDto, customerId })
       .toPromise();
   }
 }

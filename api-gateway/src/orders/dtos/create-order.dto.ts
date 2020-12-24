@@ -55,10 +55,6 @@ export class Address {
 }
 
 export class CreateOrderDto {
-  @IsNotEmpty()
-  @IsString()
-  customerId: string;
-
   @ValidateNested()
   @Type(() => Address)
   @IsNotEmpty()
