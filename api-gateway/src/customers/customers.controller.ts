@@ -1,12 +1,16 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
   UnauthorizedException,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { AuthGuard } from '@nestjs/passport';
 import { ClientProxyService } from 'src/shared/services/client-proxy.service';
 import { AuthLoginDto } from './dtos/auth-login.dto';
 import { CreateCustomerDto } from './dtos/create-customer.dto';
@@ -40,5 +44,17 @@ export class CustomersController {
     }
 
     return response;
+  }
+
+  @Get('/info')
+  @UseGuards(AuthGuard('jwt'))
+  async getInfo(@Request() request) {
+    const { id } = request.user;
+
+    const customer = await this.clientProxyCustomers.send('find-customer', {
+      id,
+    });
+
+    return customer;
   }
 }
