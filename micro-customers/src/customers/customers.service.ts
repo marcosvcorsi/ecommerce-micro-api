@@ -39,4 +39,8 @@ export class CustomersService {
 
     return { token };
   }
+
+  async findById(id: string) {
+    return this.customersRepository.findById(id);
+  }
 }

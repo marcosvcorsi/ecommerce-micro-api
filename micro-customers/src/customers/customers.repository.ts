@@ -19,4 +19,8 @@ export class CustomersRepository {
 
     return customer;
   }
+
+  async findById(id: string) {
+    return this.customerModel.findById(id);
+  }
 }

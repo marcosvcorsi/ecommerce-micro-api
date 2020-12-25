@@ -17,4 +17,11 @@ export class CustomersController {
   async auth(authLoginDto: AuthLoginDto) {
     return this.customersService.auth(authLoginDto);
   }
+
+  @MessagePattern('find-customer')
+  async findById(@Payload() data: any) {
+    const { id } = data;
+
+    return this.customersService.findById(id);
+  }
 }
