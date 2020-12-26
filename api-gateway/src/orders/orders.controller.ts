@@ -5,6 +5,7 @@ import {
   UseGuards,
   Request,
   BadRequestException,
+  Get,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { AuthGuard } from '@nestjs/passport';
@@ -33,9 +34,22 @@ export class OrdersController {
     );
   }
 
+  @Get()
+  async findAll(@Request() request) {
+    const { id: customerId } = request.user;
+
+    const orders = await this.clientProxyOrders
+      .send('find-orders', {
+        customerId,
+      })
+      .toPromise();
+
+    return orders;
+  }
+
   @Post()
-  async create(@Body() createOrderDto: CreateOrderDto, @Request() req) {
-    const { id: customerId } = req.user;
+  async create(@Body() createOrderDto: CreateOrderDto, @Request() request) {
+    const { id: customerId } = request.user;
 
     const customer = await this.clientProxyCustomers
       .send('find-customer', {
