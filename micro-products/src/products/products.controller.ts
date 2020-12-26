@@ -1,4 +1,4 @@
-import { Controller, Logger } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { Product } from './product.entity';
 import { ProductsService } from './products.service';
@@ -13,7 +13,13 @@ export class ProductsController {
   }
 
   @MessagePattern('find-products')
-  async findAll() {
+  async findAll(@Payload() data: any) {
+    const { ids } = data;
+
+    if (ids) {
+      return this.productsService.findByIds(ids);
+    }
+
     return this.productsService.findAll();
   }
 

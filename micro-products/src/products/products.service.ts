@@ -14,6 +14,10 @@ export class ProductsService {
     return this.productsRepository.find();
   }
 
+  async findByIds(ids: string[]): Promise<Product[]> {
+    return this.productsRepository.findByIds(ids);
+  }
+
   async create(productDto: Omit<Product, 'id'>): Promise<Product> {
     const product = this.productsRepository.create(productDto);
 
