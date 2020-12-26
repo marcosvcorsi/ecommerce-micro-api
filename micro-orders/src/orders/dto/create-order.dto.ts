@@ -5,5 +5,5 @@ export class CreateOrderDto {
   customerId: string;
   customerName: string;
   address: Address;
-  orderItems: Array<Partial<OrderItem>>;
+  orderItems: Array<OrderItem>;
 }
