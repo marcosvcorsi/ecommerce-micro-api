@@ -26,5 +26,10 @@ services:
       http.cors.enabled: 'true'
       http.cors.allow-origin: https://app.elasticvue.com
     ports:
-    - 9200:9200
-    - 9300:9300
+      - 9200:9200
+      - 9300:9300
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - 6379:6379  
