@@ -18,4 +18,8 @@ export class OrdersRepository {
 
     return order;
   }
+
+  async findByCustomerId(customerId: string) {
+    return this.orderModel.find({ customerId });
+  }
 }

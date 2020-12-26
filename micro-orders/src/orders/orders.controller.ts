@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersService } from './orders.service';
 
@@ -10,5 +10,14 @@ export class OrdersController {
   @EventPattern('create-order')
   async create(@Payload() createOrderDto: CreateOrderDto) {
     await this.ordersService.create(createOrderDto);
+  }
+
+  @MessagePattern('find-orders')
+  async findAll(@Payload() data: any) {
+    const { customerId } = data;
+
+    if (customerId) {
+      return this.ordersService.findByCustomerId(customerId);
+    }
   }
 }

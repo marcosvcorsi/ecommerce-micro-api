@@ -9,4 +9,8 @@ export class OrdersService {
   async create(createOrderDto: CreateOrderDto) {
     return this.ordersRepository.create(createOrderDto);
   }
+
+  async findByCustomerId(customerId: string) {
+    return this.ordersRepository.findByCustomerId(customerId);
+  }
 }
