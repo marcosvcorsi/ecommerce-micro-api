@@ -20,4 +20,11 @@ export class OrdersController {
       return this.ordersService.findByCustomerId(customerId);
     }
   }
+
+  @MessagePattern('find-order')
+  async find(@Payload() data: any) {
+    const { id } = data;
+
+    return this.ordersService.findById(id);
+  }
 }

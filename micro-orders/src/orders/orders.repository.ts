@@ -22,4 +22,8 @@ export class OrdersRepository {
   async findByCustomerId(customerId: string) {
     return this.orderModel.find({ customerId });
   }
+
+  async findById(id: string) {
+    return this.orderModel.findById(id);
+  }
 }

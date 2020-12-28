@@ -28,4 +28,8 @@ export class OrdersService {
 
     return orders;
   }
+
+  async findById(id: string) {
+    return this.ordersRepository.findById(id);
+  }
 }
