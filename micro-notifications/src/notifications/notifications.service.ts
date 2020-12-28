@@ -1,9 +1,8 @@
-import fs from 'fs';
-import path from 'path';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, Logger } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ClientProxyService } from 'src/shared/services/client-proxy.service';
+import orderTemplate from './templates/order';
 
 @Injectable()
 export class NotificationsService {
@@ -36,12 +35,7 @@ export class NotificationsService {
         .send('find-order', { id: orderId })
         .toPromise();
 
-      const templateEmail = await fs.promises.readFile(
-        path.resolve(__dirname, '..', 'templates', 'order.html'),
-        'utf-8',
-      );
-
-      const htmlToSend = templateEmail
+      const htmlToSend = orderTemplate
         .replace('#CUSTOMER_NAME', customer.name)
         .replace('#ORDER_ID', order._id)
         .replace('#ORDER_STATUS', order.status);
